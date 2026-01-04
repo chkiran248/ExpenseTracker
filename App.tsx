@@ -77,31 +77,31 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-stone-50">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-[#162a0a] text-stone-100 flex-shrink-0 shadow-2xl z-30">
+      <aside className="w-full md:w-64 bg-[#227d49] text-stone-100 flex-shrink-0 shadow-2xl z-30">
         <div className="p-6">
-          <h1 className="text-xl font-bold flex items-center gap-2">
-            <span className="p-1.5 bg-[#c79e1c] rounded-lg text-[#162a0a]">
-              <Icons.Budgets />
+          <h1 className="text-2xl font-black flex items-center gap-3 tracking-tight">
+            <span className="p-2 bg-[#c79e1c] rounded-xl text-[#227d49] shadow-inner">
+              <Icons.Logo />
             </span>
-            BizExpense Pro
+            MoneyFlow
           </h1>
         </div>
         <nav className="mt-4 px-3 space-y-2">
           <button 
             onClick={() => setView('dashboard')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'dashboard' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition-all ${view === 'dashboard' ? 'bg-[#c79e1c] text-[#227d49] shadow-lg shadow-[#c79e1c]/30' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
           >
             <Icons.Dashboard /> Dashboard
           </button>
           <button 
             onClick={() => setView('expenses')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'expenses' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition-all ${view === 'expenses' ? 'bg-[#c79e1c] text-[#227d49] shadow-lg shadow-[#c79e1c]/30' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
           >
             <Icons.Expenses /> Expenses
           </button>
           <button 
             onClick={() => setView('budgets')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'budgets' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition-all ${view === 'budgets' ? 'bg-[#c79e1c] text-[#227d49] shadow-lg shadow-[#c79e1c]/30' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
           >
             <Icons.Budgets /> Budgets
           </button>
@@ -110,15 +110,15 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-[#8cc045]/20 px-6 py-4 flex flex-wrap gap-4 items-center justify-between">
+        <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-[#8cc045]/20 px-6 py-4 flex flex-wrap gap-4 items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-[#162a0a] capitalize">{view} Overview</h2>
-            <p className="text-xs text-[#8cc045] font-bold">Premium Financial Asset Tracking</p>
+            <h2 className="text-lg font-bold text-[#227d49] capitalize">{view} Overview</h2>
+            <p className="text-xs text-[#8cc045] font-black tracking-wider uppercase">Intelligent Financial Logistics</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right mr-4">
-              <p className="text-xs text-[#8cc045] font-bold">Total Disbursed</p>
-              <p className="text-lg font-black text-[#162a0a]">₹{totalSpent.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-[10px] text-[#8cc045] font-black uppercase tracking-widest">Aggregate Disbursal</p>
+              <p className="text-lg font-black text-[#227d49]">₹{totalSpent.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
             </div>
             <button 
               onClick={() => {
@@ -127,7 +127,7 @@ const App: React.FC = () => {
               }}
               className="flex items-center gap-2 bg-[#8cc045] hover:bg-[#7aaf38] text-white px-5 py-2.5 rounded-xl font-black transition-all shadow-md hover:shadow-lg active:scale-95"
             >
-              <Icons.Plus /> <span>New Record</span>
+              <Icons.Plus /> <span>New Entry</span>
             </button>
           </div>
         </header>
