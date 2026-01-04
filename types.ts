@@ -24,6 +24,7 @@ export interface Expense {
   description: string;
   paymentMethod: PaymentMethod;
   isTaxDeductible: boolean;
+  receiptImage?: string; // Base64 encoded image string
 }
 
 export interface Budget {

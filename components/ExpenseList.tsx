@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Expense, Category, PaymentMethod } from '../types';
-import { CATEGORIES, PAYMENT_METHODS } from '../constants';
+import { CATEGORIES, PAYMENT_METHODS, Icons } from '../constants';
 
 interface ExpenseListProps {
   expenses: Expense[];
@@ -15,6 +15,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete, onEdit })
   const [paymentFilter, setPaymentFilter] = useState<PaymentMethod | 'All'>('All');
   const [sortField, setSortField] = useState<keyof Expense>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [viewingReceipt, setViewingReceipt] = useState<string | null>(null);
 
   const filteredExpenses = useMemo(() => {
     return expenses
@@ -147,7 +148,18 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete, onEdit })
                       </span>
                     </td>
                     <td className="px-6 py-4 font-bold text-[#162a0a]">
-                      {expense.description}
+                      <div className="flex items-center gap-2">
+                        {expense.description}
+                        {expense.receiptImage && (
+                          <button 
+                            onClick={() => setViewingReceipt(expense.receiptImage!)}
+                            className="text-[#8cc045] hover:text-[#7aaf38] transition-all"
+                            title="View Voucher"
+                          >
+                            <Icons.Receipt />
+                          </button>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-black text-[#162a0a]">
                       ₹{expense.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -176,6 +188,32 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete, onEdit })
           </table>
         </div>
       </div>
+
+      {/* Simple Receipt Viewer Overlay */}
+      {viewingReceipt && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-8 animate-in fade-in duration-200"
+          onClick={() => setViewingReceipt(null)}
+        >
+          <div className="relative max-w-4xl w-full h-full flex flex-col gap-4">
+            <div className="flex justify-between items-center text-white shrink-0">
+              <h3 className="text-xl font-black uppercase tracking-widest">Document Audit</h3>
+              <button 
+                onClick={() => setViewingReceipt(null)}
+                className="p-2 hover:bg-white/10 rounded-full transition-all"
+              >
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 bg-white/5 rounded-3xl overflow-hidden border border-white/10 flex items-center justify-center">
+              <img src={viewingReceipt} alt="Full Voucher" className="max-w-full max-h-full object-contain" />
+            </div>
+            <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em] text-center">MoneyFlow Digital Asset Verification</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
