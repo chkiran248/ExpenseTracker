@@ -41,10 +41,10 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses, budgets }) => {
       .reduce((sum, e) => sum + e.amount, 0);
     
     return [
-      { label: 'Total Yearly Spending', value: total, color: 'indigo' },
-      { label: 'Monthly Budget Health', value: budgetTotal > 0 ? (monthTotal / budgetTotal) * 100 : 0, isPercent: true, color: 'cyan' },
-      { label: 'Current Month Spent', value: monthTotal, color: 'emerald' },
-      { label: 'Total Registered Expenses', value: expenses.length, isCount: true, color: 'slate' }
+      { label: 'Annual Disbursement', value: total, color: '#8cc045' },
+      { label: 'Budget Utilization', value: budgetTotal > 0 ? (monthTotal / budgetTotal) * 100 : 0, isPercent: true, color: '#c79e1c' },
+      { label: 'Monthly Record', value: monthTotal, color: '#8cc045' },
+      { label: 'Transaction Audit', value: expenses.length, isCount: true, color: '#8cc045' }
     ];
   }, [expenses, budgets]);
 
@@ -53,10 +53,10 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses, budgets }) => {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.label}</p>
-            <div className="mt-2 flex items-baseline gap-2">
-              <p className="text-2xl font-bold text-slate-900">
+          <div key={idx} className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:border-[#8cc045]/30 transition-all group">
+            <p className="text-xs font-black text-[#8cc045] uppercase tracking-widest mb-1">{stat.label}</p>
+            <div className="flex items-baseline gap-2">
+              <p className="text-2xl font-black text-[#162a0a]">
                 {stat.isPercent 
                   ? `${stat.value.toFixed(1)}%` 
                   : stat.isCount 
@@ -65,10 +65,10 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses, budgets }) => {
               </p>
             </div>
             {stat.isPercent && (
-              <div className="mt-3 w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div className="mt-3 w-full bg-stone-100 rounded-full h-2 overflow-hidden">
                 <div 
-                  className={`h-full ${stat.value > 100 ? 'bg-rose-500' : 'bg-emerald-500'} transition-all`}
-                  style={{ width: `${Math.min(stat.value, 100)}%` }}
+                  className={`h-full transition-all duration-1000`}
+                  style={{ width: `${Math.min(stat.value, 100)}%`, backgroundColor: stat.value > 100 ? '#c79e1c' : '#8cc045' }}
                 />
               </div>
             )}
@@ -78,28 +78,28 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses, budgets }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Monthly Spending Chart */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-800 mb-6">Spending Trends</h3>
+        <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+          <h3 className="text-lg font-black text-[#162a0a] mb-6">Capital Flow Timeline</h3>
           <div className="h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `₹${val}`} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f5f5f4" />
+                <XAxis dataKey="name" stroke="#162a0a" fontSize={11} fontWeight={900} tickLine={false} axisLine={false} />
+                <YAxis stroke="#162a0a" fontSize={11} fontWeight={900} tickLine={false} axisLine={false} tickFormatter={(val) => `₹${val}`} />
                 <Tooltip 
                   cursor={{ fill: '#f8fafc' }}
-                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', backgroundColor: '#fff' }}
                   formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Amount']}
                 />
-                <Bar dataKey="amount" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="amount" fill="#8cc045" radius={[5, 5, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Categories Distribution */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-800 mb-6">Expense Distribution</h3>
+        <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+          <h3 className="text-lg font-black text-[#162a0a] mb-6">Asset Distribution</h3>
           <div className="h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -107,17 +107,20 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses, budgets }) => {
                   data={categoryData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
+                  innerRadius={75}
+                  outerRadius={105}
+                  paddingAngle={6}
                   dataKey="value"
                 >
                   {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name as Category] || '#ccc'} />
+                    <Cell key={`cell-${index}`} fill={CATEGORY_COLORS[entry.name as Category] || '#ccc'} stroke="none" />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total']} />
-                <Legend layout="vertical" verticalAlign="middle" align="right" />
+                <Tooltip 
+                   contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
+                   formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total']} 
+                />
+                <Legend layout="vertical" verticalAlign="middle" align="right" wrapperStyle={{ paddingLeft: '15px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>

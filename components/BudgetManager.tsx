@@ -36,31 +36,31 @@ const BudgetManager: React.FC<BudgetManagerProps> = ({ budgets, expenses, onUpda
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+      <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800">Monthly Budgets</h3>
-          <p className="text-sm text-slate-500">Compare your actual spending against allocated limits for {new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date())}.</p>
+          <h3 className="text-lg font-black text-[#162a0a]">Threshold Management</h3>
+          <p className="text-sm text-[#8cc045] font-black">Capital health for {new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date())}.</p>
         </div>
         {!editMode ? (
           <button 
             onClick={() => setEditMode(true)}
-            className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="px-5 py-2.5 bg-[#162a0a] text-stone-100 rounded-xl hover:bg-[#1d2d0f] transition-all font-black shadow-md active:scale-95"
           >
-            Manage Limits
+            Modify Limits
           </button>
         ) : (
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button 
               onClick={() => { setEditMode(false); setLocalBudgets(budgets); }}
-              className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
+              className="px-5 py-2.5 text-[#162a0a] hover:bg-stone-50 rounded-xl transition-all font-black"
             >
-              Cancel
+              Abort
             </button>
             <button 
               onClick={handleSave}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+              className="px-5 py-2.5 bg-[#c79e1c] text-[#162a0a] rounded-xl hover:bg-[#ab8818] transition-all font-black shadow-md active:scale-95"
             >
-              Save Changes
+              Confirm Update
             </button>
           </div>
         )}
@@ -73,45 +73,48 @@ const BudgetManager: React.FC<BudgetManagerProps> = ({ budgets, expenses, onUpda
           const isOver = spent > budget.amount;
 
           return (
-            <div key={budget.category} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div key={budget.category} className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:border-[#8cc045]/40 transition-all">
               <div className="flex justify-between items-start mb-4">
-                <h4 className="font-semibold text-slate-800">{budget.category}</h4>
+                <h4 className="font-black text-[#162a0a]">{budget.category}</h4>
                 {editMode ? (
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-400">₹</span>
+                    <span className="text-sm font-black text-[#8cc045]">₹</span>
                     <input 
                       type="number"
-                      className="w-24 px-2 py-1 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                      className="w-24 px-3 py-1.5 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8cc045] text-sm font-black text-[#162a0a]"
                       value={budget.amount}
                       onChange={(e) => handleBudgetChange(budget.category, e.target.value)}
                     />
                   </div>
                 ) : (
                   <div className="text-right">
-                    <p className="text-sm text-slate-400">Limit</p>
-                    <p className="font-bold text-slate-900">₹{budget.amount.toLocaleString('en-IN')}</p>
+                    <p className="text-xs font-black text-[#8cc045] uppercase tracking-tighter">Limit</p>
+                    <p className="font-black text-[#162a0a] text-lg">₹{budget.amount.toLocaleString('en-IN')}</p>
                   </div>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs font-medium">
-                  <span className={isOver ? 'text-rose-600' : 'text-slate-500'}>
-                    Spent: ₹{spent.toLocaleString('en-IN')}
+              <div className="space-y-3">
+                <div className="flex justify-between text-xs font-black">
+                  <span className={isOver ? 'text-[#c79e1c]' : 'text-[#8cc045]'}>
+                    Disbursed: ₹{spent.toLocaleString('en-IN')}
                   </span>
-                  <span className="text-slate-400">
-                    {percent.toFixed(0)}% used
+                  <span className="text-stone-400 uppercase tracking-widest">
+                    {percent.toFixed(0)}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="w-full bg-stone-50 rounded-full h-3.5 overflow-hidden border border-stone-100">
                   <div 
-                    className={`h-full transition-all duration-500 ${isOver ? 'bg-rose-500' : percent > 80 ? 'bg-amber-500' : 'bg-emerald-500'}`}
-                    style={{ width: `${Math.min(percent, 100)}%` }}
+                    className={`h-full transition-all duration-1000`}
+                    style={{ 
+                      width: `${Math.min(percent, 100)}%`, 
+                      backgroundColor: isOver ? '#c79e1c' : '#8cc045' 
+                    }}
                   />
                 </div>
                 {isOver && (
-                  <p className="text-xs text-rose-500 font-medium">
-                    Exceeded by ₹{(spent - budget.amount).toLocaleString('en-IN')}
+                  <p className="text-xs text-[#c79e1c] font-black italic">
+                    ⚠️ Variance Overrun: ₹{(spent - budget.amount).toLocaleString('en-IN')}
                   </p>
                 )}
               </div>

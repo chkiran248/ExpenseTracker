@@ -75,33 +75,33 @@ const App: React.FC = () => {
   [expenses]);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-stone-50">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-slate-900 text-slate-100 flex-shrink-0">
+      <aside className="w-full md:w-64 bg-[#162a0a] text-stone-100 flex-shrink-0 shadow-2xl z-30">
         <div className="p-6">
           <h1 className="text-xl font-bold flex items-center gap-2">
-            <span className="p-1.5 bg-indigo-600 rounded-lg">
+            <span className="p-1.5 bg-[#c79e1c] rounded-lg text-[#162a0a]">
               <Icons.Budgets />
             </span>
             BizExpense Pro
           </h1>
         </div>
-        <nav className="mt-4 px-3 space-y-1">
+        <nav className="mt-4 px-3 space-y-2">
           <button 
             onClick={() => setView('dashboard')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${view === 'dashboard' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'dashboard' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
           >
             <Icons.Dashboard /> Dashboard
           </button>
           <button 
             onClick={() => setView('expenses')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${view === 'expenses' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'expenses' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
           >
             <Icons.Expenses /> Expenses
           </button>
           <button 
             onClick={() => setView('budgets')}
-            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${view === 'budgets' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all ${view === 'budgets' ? 'bg-[#c79e1c] text-[#162a0a] shadow-lg shadow-[#c79e1c]/20' : 'text-stone-300 hover:text-white hover:bg-[#8cc045]/10'}`}
           >
             <Icons.Budgets /> Budgets
           </button>
@@ -110,24 +110,24 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        <header className="sticky top-0 z-20 bg-white border-b border-slate-200 px-6 py-4 flex flex-wrap gap-4 items-center justify-between">
+        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-[#8cc045]/20 px-6 py-4 flex flex-wrap gap-4 items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-slate-800 capitalize">{view} Overview</h2>
-            <p className="text-xs text-slate-500">Business financials managed in real-time</p>
+            <h2 className="text-lg font-bold text-[#162a0a] capitalize">{view} Overview</h2>
+            <p className="text-xs text-[#8cc045] font-bold">Premium Financial Asset Tracking</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right mr-4">
-              <p className="text-xs text-slate-500">Total Spent</p>
-              <p className="text-lg font-bold text-slate-900">₹{totalSpent.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+              <p className="text-xs text-[#8cc045] font-bold">Total Disbursed</p>
+              <p className="text-lg font-black text-[#162a0a]">₹{totalSpent.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
             </div>
             <button 
               onClick={() => {
                 setEditingExpense(null);
                 setIsFormOpen(true);
               }}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg font-medium transition-shadow shadow-sm hover:shadow-md"
+              className="flex items-center gap-2 bg-[#8cc045] hover:bg-[#7aaf38] text-white px-5 py-2.5 rounded-xl font-black transition-all shadow-md hover:shadow-lg active:scale-95"
             >
-              <Icons.Plus /> <span>New Expense</span>
+              <Icons.Plus /> <span>New Record</span>
             </button>
           </div>
         </header>
